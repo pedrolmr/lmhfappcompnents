@@ -1,13 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
 
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
 import LoginScreen from './app/screens/LoginScreen';
-import WelcomeScreen from "./app/screens/WelcomeScreen";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import WelcomeScreen from './app/screens/WelcomeScreen';
 
-export default function App() {
+const Stack = createStackNavigator();
+
+function App() {
   return (
-    // <WelcomeScreen />
-    <LoginScreen />
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="WelcomeScreen">
+        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
+
+export default App;
