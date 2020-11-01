@@ -1,10 +1,10 @@
 
 import React from "react";
 import { Image, ImageBackground, StyleSheet, Text, View, TouchableOpacity} from "react-native";
-export default function WelcomeScreen() {
+export default function WelcomeScreen({navigation}) {
   return (
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.login}>
+        <TouchableOpacity style={styles.login} onPress={() => navigation.navigate('Login')}>
             <Text style={styles.text}>Login</Text>
         </TouchableOpacity>
 
@@ -17,11 +17,6 @@ export default function WelcomeScreen() {
 }
 
 const styles = StyleSheet.create({
-//   background: {
-//     flex: 1,
-//     justifyContent: "flex-end",
-//     alignItems: "center",
-//   },
   buttonsContainer: {
     padding: 20,
     width: "100%",
@@ -50,19 +45,4 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     fontWeight: "bold",
   },
-//   logo: {
-//     width: 200,
-//     height: 200,
-//   },
-//   logoContainer: {
-//     position: "absolute",
-//     top: 70,
-//     alignItems: "center",
-//   },
-//   tagline: {
-//     fontSize: 25,
-//     fontWeight: "600",
-//     color: colors.white,
-//     fontStyle: "italic",
-//   },
 });
