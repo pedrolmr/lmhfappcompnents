@@ -1,8 +1,12 @@
 import React from "react";
-import Constants from "expo-constants";
-import { StyleSheet, Image, SafeAreaView, View, Platform, TextInput, Text, Button} from "react-native";
+import { StyleSheet, Image } from "react-native";
 import { Formik } from "formik";
 import * as Yup from 'yup';
+
+import Screen from "../components/Screen";
+import AppTextInput from "../components/AppTextInput";
+import AppButton from "../components/AppButton";
+import ErrorMessage from "../components/ErrorMessage";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -12,16 +16,16 @@ const validationSchema = Yup.object().shape({
 function LoginScreen(props) {
 
   return (
-    <SafeAreaView style={styles.container}>
-    
+    <Screen style={styles.container}>
+
       <Formik
         initialValues={{ email: '', password: '' }}
         onSubmit={values => console.log(values)}
         validationSchema={validationSchema}
       >
-        { ({handleChange, handleSubmit, errors, setFieldTouched }) => (
-           <View style={styles.textinputcontainer}>
-            <TextInput style={styles.text}
+        { ({handleChange, handleSubmit, errors, setFieldTouched, touched}) => (
+          <>
+            <AppTextInput 
               autoCapitalize="none" 
               autoCorrect={false}
               icon="email"
@@ -31,11 +35,9 @@ function LoginScreen(props) {
               placeholder="Email"
               textContentType="emailAddress"
             />
-
-        <View>{ !errors.email ? null : <Text style={{ color: "red"}}>{errors.email}</Text>}</View>;
-       
-
-            <TextInput 
+           
+            <ErrorMessage error={errors.email} visible={touched.email}/>
+            <AppTextInput 
               autoCapitalize="none"
               autoCorrect={false}
               icon="lock"
@@ -45,36 +47,26 @@ function LoginScreen(props) {
               secureTextEntry={true}
               textContentType="password"
             />
-          
-           
-        <View>{!errors.password ? null : <Text style={{ color: "red"}}>{errors.password}</Text>}</View>;
-            <Button title="Login" onPress={handleSubmit} />
-        
-          </View>
+         
+            <ErrorMessage error={errors.password} visible={touched.password}/>
+            <AppButton title="Login" onPress={handleSubmit} />
+          </>
         )}
-        
       </Formik>
-    </SafeAreaView>
+    </Screen>
   );
 }
 const styles = StyleSheet.create({
   container:{
-    padding: 10,
-    paddingTop: Constants.statusBarHeight,
-    flex: 1,
+    padding: 10
   },
-  text: {
-    color: "black",
-    fontSize: 18,
-    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+  logo: {
+    width: 80,
+    height: 80,
+    alignSelf: "center",
+    marginTop: 50,
+    marginBottom: 20
   },
-  textinputcontainer:{
-    borderRadius: 25,
-    flexDirection: "row",
-    width: "100%",
-    padding: 15,
-    marginVertical: 10,
-  }
 }); 
 
 export default LoginScreen;
